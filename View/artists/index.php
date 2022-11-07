@@ -14,16 +14,20 @@ use App\Entity\Artist;
 <div class=row>
     <?php foreach ($artists as $artist){?>
         <div class=col-md-4>
-            <a href="/artist/profil/?id=<?= $artist->getId() ?>">
+            <a href="/artist/profil/?id=<?= $artist->getId_artist_spotify() ?>">
                 <div class="card" style="width: 18rem;">
                     <img class="card-img-top" src="<?php if($artist->getPicture()!==null){ echo($artist->getPicture()); } 
                     else{ echo("https://i.insider.com/58f66e6bc75d4a20058b537c?width=1000&format=jpeg&auto=webp");} ?>" alt="Image d album">
                     <div class="card-body">
                         <h5 class="card-title">Name : <?= $artist->getName()?></h5>
                         <p class="card-text">Followers : <?= $artist->getFollowers()?></p>
-                        <p class="card-text">Id : <?= $artist->getId() ?></p>
+                        <p class="card-text">Id : <?= $artist->getId_artist_spotify() ?></p>
                         <p class="card-text">Link : <?= $artist->getLink() ?></p>
                         <p class="card-text">Genres : <?= $artist->getGenders() ?></p>
+                        <form action="/artist/favoris_artist" method="post" class="d-flex">
+                            <input type="hidden" name="artist" value='<?= json_encode($artist) ?>'>
+                            <button class="btn btn-danger mb-3" type="submit">Ajouter au favoris</button>
+                        </form>
                     </div>
                 </div>
             </a>

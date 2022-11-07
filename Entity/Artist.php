@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-class Artist
+class Artist extends Model
 {
+    public string|null $Id_artist;
 
     public function __construct(
-        public string|null $id,
+        public string|null $Id_artist_spotify,
 
         public string|null $name,
 
@@ -19,16 +20,17 @@ class Artist
         public string|null $picture,
     )
     {
+        $this->table = "artist";
     }
 
-    public function getId(): ?string
+    public function getId_artist_spotify(): ?string
     {
-        return $this->id;
+        return $this->Id_artist_spotify;
     }
 
-    public function setId(string $id): self
+    public function setId_artist_spotify(string $Id_artist_spotify): self
     {
-        $this->id = $id;
+        $this->Id_artist_spotify = $Id_artist_spotify;
         return $this;
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-class Album{
+class Track{
 
     public function __construct(
         public string|null $id,

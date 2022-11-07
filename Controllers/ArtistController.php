@@ -45,7 +45,7 @@ class ArtistController extends Controller
         $albumjson = json_decode($result);
         $albums = [];
         foreach ($albumjson->items as $value){
-            $album = new Album($value->id,$value->name,$value->release_date,$value->total_tracks,$value->type,$value->images[0]->url);
+            $album = new Album($value->id,$value->name,$value->release_date,$value->total_tracks,$value->type,$value->images[0]->url,null);
             $albums[]=$album;
         }
 
@@ -55,7 +55,7 @@ class ArtistController extends Controller
     public function tracks(){
         $ch = curl_init();
         if(isset($_GET["idAlbum"])){
-            curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/albums/" . $_GET["idAlbum"]. "/tracks");
+            curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/albums/" . $_GET["idAlbum"] . "/tracks");
         }else{
             curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/search?q=Eminem&type=artist&limit=50");
         }
@@ -66,13 +66,44 @@ class ArtistController extends Controller
         //var_dump(json_decode($result));
         $alltracks = json_decode($result);
         $tracks = [];
-        var_dump($alltracks);
         foreach ($alltracks->items as $value){
             $track = new Track($value->id,$value->name,$value->track_number,$value->artists);
             $tracks[]=$track;
-            var_dump($tracks);
         }
 
         $this->render('artists/tracks', compact('tracks'));
+    }
+
+    public function favoris_album(){
+        if(isset($_POST["album"])){
+            $value = json_decode($_POST["album"]);
+            var_dump($value->Id_album_spotify);
+
+            var_dump($value->name);
+            var_dump($value->release_date);
+            var_dump($value->total_tracks);
+            var_dump($value->type);
+            var_dump($value->picture);
+            var_dump($value->tracks);
+            $album = new Artist($value->Id_album_spotify,$value->name,$value->release_date,$value->total_tracks,$value->type,$value->picture,$value->tracks);
+            var_dump($album);
+            $album->create();
+        }
+        
+
+        $this->render('artists/favoris_album');
+    }
+
+    public function favoris_artist(){
+        if(isset($_POST["artist"])){
+            var_dump($_POST["artist"]);
+            $value = json_decode($_POST["artist"]);
+            $artist = new Artist($value->Id_artist_spotify,$value->name,$value->followers,$value->genders,$value->link,$value->picture);
+            var_dump($artist);
+            $artist->create();
+        }
+        
+
+        $this->render('artists/favoris_artist');
     }
 }

@@ -4,8 +4,10 @@ namespace App\Entity;
 
 class Album{
 
+    public string|null $Id_album;
+
     public function __construct(
-        public string|null $id,
+        public string|null $Id_album_spotify,
 
         public string|null $name,
 
@@ -16,18 +18,22 @@ class Album{
         public string|null $type,
 
         public string|null $picture,
+
+        public array|null $tracks,
+
     )
     {
+        $this->table = "album";
     }
 
-    public function getId(): ?string
+    public function getId_album_spotify(): ?string
     {
-        return $this->id;
+        return $this->Id_album_spotify;
     }
 
-    public function setId(string $id): self
+    public function setId_album_spotify(string $Id_album_spotify): self
     {
-        $this->id = $id;
+        $this->Id_album_spotify = $Id_album_spotify;
         return $this;
     }
 
@@ -84,6 +90,17 @@ class Album{
     public function setPicture(string $picture): self
     {
         $this->picture = $picture;
+        return $this;
+    }
+
+    public function getTracks(): ?array
+    {
+        return $this->tracks;
+    }
+
+    public function setTracks(array $tracks): self
+    {
+        $this->tracks = $tracks;
         return $this;
     }
 }

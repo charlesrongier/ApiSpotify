@@ -56,6 +56,9 @@ class Model extends Db
             if ($value !== null && $field != 'db' && $field != 'table') {
                 $fields[] = $field;
                 $inter[] = "?";
+                if(is_array($value)){
+                    $value=json_encode($value);
+                }
                 $values[] = $value;
             }
         }
