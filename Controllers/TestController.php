@@ -11,7 +11,6 @@ class TestController extends Controller
 
     public function test()
     {
-        $test ="J'envoie a la vue";
         $this->render('test/test');
     }
 }

@@ -21,7 +21,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">Accueil</a>
+                <a class="nav-link" href="/artist">Accueil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/test">Test</a>
@@ -48,5 +48,12 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 </body>
+
+<style>
+    a{
+        text-decoration : none !important;
+        color : black!important;
+    }
+</style>
 
 </html>
