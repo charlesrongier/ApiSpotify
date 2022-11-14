@@ -23,7 +23,14 @@ use App\Entity\Artist;
                         <p class="card-text">Followers : <?= $artist->getFollowers()?></p>
                         <p class="card-text">Id : <?= $artist->getId_artist_spotify() ?></p>
                         <p class="card-text">Link : <?= $artist->getLink() ?></p>
-                        <p class="card-text">Genres : <?= $artist->getGenders() ?></p>
+                        <p class="card-text">Genres : <?php
+                            if(count($artist->getGenders())==0){
+                                echo "Pas de genre";}
+                            else{
+                                foreach($artist->getGenders() as $genre){
+                                    echo $genre;
+                                }
+                            }  ?></p>
                         <form action="/artist/add_favoris_artist" method="post" class="d-flex">
                             <input type="hidden" name="artist" value='<?= str_replace("'", "`", json_encode($artist)) ?>'>
                             <button class="btn btn-danger mb-3" type="submit">Ajouter au favoris</button>

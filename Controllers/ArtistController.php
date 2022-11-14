@@ -88,10 +88,20 @@ class ArtistController extends Controller
 
     public function add_favoris_album(){
         if(isset($_POST["album"])){
+            $doublon=0;
             $value = json_decode($_POST["album"]);
             $value->tracks = null;
             $album = new Album($value->Id_album_spotify,$value->name,$value->release_date,$value->total_tracks,$value->type,$value->picture,$value->tracks);
-            $album->create();
+            $albums_bd = new Artist(null,null,null,null,null,null);
+            $albums_bd = $albums_bd->findAll();
+            foreach ($albums_bd as $donne){
+                if($donne->name === $album->getName()){
+                    $doublon=1;
+                }
+            }
+            if($doublon===0){
+                $album->create();
+            }
         }
         header('location: /artist/favoris_album');
     }
@@ -122,11 +132,8 @@ class ArtistController extends Controller
 
     public function add_favoris_artist(){
         if(isset($_POST["artist"])){
-            var_dump($_POST["artist"]);
             $doublon=0;
             $value = json_decode($_POST["artist"]);
-            var_dump($value);
-            var_dump($value->Id_artist_spotify);
             $artist = new Artist($value->Id_artist_spotify,$value->name,$value->followers,$value->genders,$value->link,$value->picture);
             $artists_bd = new Artist(null,null,null,null,null,null);
             $artists_bd = $artists_bd->findAll();
