@@ -17,8 +17,8 @@ use App\Entity\Artist;
                         <p class="card-text">Id : <?= $album->getId_album_spotify() ?></p>
                         <p class="card-text">Nombre de titre : <?= $album->getTotal_tracks() ?></p>
                         <p class="card-text">Type : <?= $album->getType() ?></p>
-                        <form action="/artist/favoris_album" method="post" class="d-flex">
-                            <input type="hidden" name="album" value='<?= json_encode($album)?>'>
+                        <form action="/artist/add_favoris_album" method="post" class="d-flex">
+                            <input type="hidden" name="album" value='<?= str_replace("'", "`",json_encode($album))?>'>
                             <button class="btn btn-danger mb-3" type="submit">Ajouter au favoris</button>
                         </form>
                     </div>

@@ -93,9 +93,14 @@ class Model extends Db
         return $this->requete('UPDATE ' . $this->table . ' SET ' . $fieldsList . ' WHERE id = ?', $values);
     }
 
-    public function delete(int $id): bool|\PDOStatement
+    public function deleteArtist(int $id): bool|\PDOStatement
     {
-        return $this->requete("DELETE FROM {$this->table} WHERE id = ?", [$id]);
+        return $this->requete("DELETE FROM {$this->table} WHERE Id_artist = ?", [$id]);
+    }
+
+    public function deleteAlbum(int $id): bool|\PDOStatement
+    {
+        return $this->requete("DELETE FROM {$this->table} WHERE Id_album = ?", [$id]);
     }
 
 

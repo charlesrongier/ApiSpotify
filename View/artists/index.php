@@ -24,8 +24,8 @@ use App\Entity\Artist;
                         <p class="card-text">Id : <?= $artist->getId_artist_spotify() ?></p>
                         <p class="card-text">Link : <?= $artist->getLink() ?></p>
                         <p class="card-text">Genres : <?= $artist->getGenders() ?></p>
-                        <form action="/artist/favoris_artist" method="post" class="d-flex">
-                            <input type="hidden" name="artist" value='<?= json_encode($artist) ?>'>
+                        <form action="/artist/add_favoris_artist" method="post" class="d-flex">
+                            <input type="hidden" name="artist" value='<?= str_replace("'", "`", json_encode($artist)) ?>'>
                             <button class="btn btn-danger mb-3" type="submit">Ajouter au favoris</button>
                         </form>
                     </div>

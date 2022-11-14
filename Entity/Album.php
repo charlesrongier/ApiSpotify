@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
-class Album{
+class Album extends Model{ 
 
-    public string|null $Id_album;
 
     public function __construct(
         public string|null $Id_album_spotify,
@@ -20,6 +19,8 @@ class Album{
         public string|null $picture,
 
         public array|null $tracks,
+
+        public string|null $Id_album = null,
 
     )
     {

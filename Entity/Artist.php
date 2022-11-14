@@ -4,7 +4,6 @@ namespace App\Entity;
 
 class Artist extends Model
 {
-    public string|null $Id_artist;
 
     public function __construct(
         public string|null $Id_artist_spotify,
@@ -18,6 +17,8 @@ class Artist extends Model
         public string|null $link,
 
         public string|null $picture,
+
+        public int|null $Id_artist = null,
     )
     {
         $this->table = "artist";

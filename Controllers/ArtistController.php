@@ -63,7 +63,6 @@ class ArtistController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch); 
         curl_close($ch);
-        //var_dump(json_decode($result));
         $alltracks = json_decode($result);
         $tracks = [];
         foreach ($alltracks->items as $value){
@@ -75,35 +74,82 @@ class ArtistController extends Controller
     }
 
     public function favoris_album(){
+        $albums_bd = new Album(null,null,null,null,null,null,null);
+        $albums_bd = $albums_bd->findAll();
+        if(isset($albums_bd)){
+            $albums = [];
+            foreach ($albums_bd as $value){
+                $album = new Album($value->Id_Album_Spotify,$value->name,$value->release_date,$value->total_tracks,$value->type,$value->picture,$value->tracks,$value->Id_Album);
+                $albums[]=$album;
+            }
+        }
+        $this->render('artists/favoris_album', compact('albums'));
+    }
+
+    public function add_favoris_album(){
         if(isset($_POST["album"])){
             $value = json_decode($_POST["album"]);
-            var_dump($value->Id_album_spotify);
-
-            var_dump($value->name);
-            var_dump($value->release_date);
-            var_dump($value->total_tracks);
-            var_dump($value->type);
-            var_dump($value->picture);
-            var_dump($value->tracks);
-            $album = new Artist($value->Id_album_spotify,$value->name,$value->release_date,$value->total_tracks,$value->type,$value->picture,$value->tracks);
-            var_dump($album);
+            $value->tracks = null;
+            $album = new Album($value->Id_album_spotify,$value->name,$value->release_date,$value->total_tracks,$value->type,$value->picture,$value->tracks);
             $album->create();
         }
-        
+        header('location: /artist/favoris_album');
+    }
 
-        $this->render('artists/favoris_album');
+    public function delete_favoris_album(){
+        if(isset($_POST["album"])){
+            var_dump($_POST["album"]);
+            $value = json_decode($_POST["album"]);
+            $artist = new Album(null,null,null,null,null,null,null);
+            var_dump($value->Id_album);
+            $artist->deleteAlbum($value->Id_album);
+        }
+        header('location: /artist/favoris_album');
     }
 
     public function favoris_artist(){
+        $artists_bd = new Artist(null,null,null,null,null,null);
+        $artists_bd = $artists_bd->findAll();
+        if(isset($artists_bd)){
+            $artists = [];
+            foreach ($artists_bd as $value){
+                $artist = new Artist($value->Id_artist_spotify,$value->name,$value->followers->total,json_decode($value->genders),$value->link->spotify,$value->picture,$value->Id_artist);
+                $artists[]=$artist;
+            }
+        }
+        $this->render('artists/favoris_artist', compact('artists'));
+    }
+
+    public function add_favoris_artist(){
+        if(isset($_POST["artist"])){
+            var_dump($_POST["artist"]);
+            $doublon=0;
+            $value = json_decode($_POST["artist"]);
+            var_dump($value);
+            var_dump($value->Id_artist_spotify);
+            $artist = new Artist($value->Id_artist_spotify,$value->name,$value->followers,$value->genders,$value->link,$value->picture);
+            $artists_bd = new Artist(null,null,null,null,null,null);
+            $artists_bd = $artists_bd->findAll();
+            foreach ($artists_bd as $donne){
+                if($donne->name === $artist->getName()){
+                    $doublon=1;
+                }
+            }
+            if($doublon===0){
+                $artist->create();
+            }
+        }
+        header('location: /artist/favoris_artist');
+    }
+
+    public function delete_favoris_artist(){
         if(isset($_POST["artist"])){
             var_dump($_POST["artist"]);
             $value = json_decode($_POST["artist"]);
-            $artist = new Artist($value->Id_artist_spotify,$value->name,$value->followers,$value->genders,$value->link,$value->picture);
-            var_dump($artist);
-            $artist->create();
+            $artist = new Artist(null,null,null,null,null,null);
+            var_dump($value->Id_artist);
+            $artist->deleteArtist($value->Id_artist);
         }
-        
-
-        $this->render('artists/favoris_artist');
+        header('location: /artist/favoris_artist');
     }
 }
